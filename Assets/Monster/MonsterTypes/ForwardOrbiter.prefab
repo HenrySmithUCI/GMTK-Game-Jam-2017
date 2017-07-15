@@ -25,6 +25,7 @@ GameObject:
   - component: {fileID: 61735086680321282}
   - component: {fileID: 114860031201689548}
   - component: {fileID: 114403805563128800}
+  - component: {fileID: 114733946164285094}
   m_Layer: 0
   m_Name: ForwardOrbiter
   m_TagString: Untagged
@@ -213,6 +214,20 @@ MonoBehaviour:
   pool: {fileID: 0}
   interval: 0.1
   thetaRange: 10
+--- !u!114 &114733946164285094
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1772259667226762}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f708278395002419a326ab4aab12c8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cornerThresholdX: 2
+  cornerThresholdY: 1.2
+  cornerThreshAngle: 0.5
 --- !u!114 &114860031201689548
 MonoBehaviour:
   m_ObjectHideFlags: 1

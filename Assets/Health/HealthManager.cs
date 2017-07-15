@@ -31,7 +31,7 @@ public class HealthManager : MonoBehaviour {
 
     void Update()
     {
-        health -= decayRate * Time.deltaTime;
+        health -= decayRate * Time.deltaTime * TimeManager.TimeScale;
 
         if(health <= 0)
         {

@@ -17,11 +17,15 @@ public class OrbiterMonster : Monster {
         radius = vals.x;
         orbitCenter = center;
         theta = Random.Range(0, 360);
-        transform.localPosition = center - new Vector2(Mathf.Cos(theta * Mathf.PI / 180) * radius, Mathf.Sin(theta * Mathf.PI / 180) * radius);
         transform.localEulerAngles = new Vector3(0, 0, theta - 90);
         inited = true;
     }
 	
+    void setPos()
+    {
+        transform.localPosition = orbitCenter - new Vector2(Mathf.Cos(theta * Mathf.PI / 180) * radius, Mathf.Sin(theta * Mathf.PI / 180) * radius);
+    }
+
 	void Update ()
     {
         if (false == inited)
@@ -30,6 +34,6 @@ public class OrbiterMonster : Monster {
         }
         transform.localEulerAngles = new Vector3(0, 0, theta - 90);
         transform.localPosition = orbitCenter - new Vector2(Mathf.Cos(theta * Mathf.PI / 180) * radius, Mathf.Sin(theta * Mathf.PI / 180) * radius);
-        theta += rotationSpeed * Time.deltaTime;
+        theta += rotationSpeed * Time.deltaTime * TimeManager.TimeScale;
 	}
 }

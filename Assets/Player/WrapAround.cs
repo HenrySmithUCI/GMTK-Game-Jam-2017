@@ -12,7 +12,7 @@ public class WrapAround : MonoBehaviour {
     float halfWidth;
     float halfHeight;
     Vector2[] directions = new Vector2[4];
-    Rigidbody2D mainRB;
+    //Rigidbody2D mainRB;
 
 	void Start () {
         Matrix4x4 orthoMatrix = Camera.main.projectionMatrix;
@@ -22,7 +22,7 @@ public class WrapAround : MonoBehaviour {
         directions[1] = new Vector2(-1, 1);
         directions[2] = new Vector2(-1, -1);
         directions[3] = new Vector2(1, -1);
-        mainRB = GetComponent<Rigidbody2D>();
+        //mainRB = GetComponent<Rigidbody2D>();
     }
 	
 	void Update () {
@@ -64,9 +64,9 @@ public class WrapAround : MonoBehaviour {
         if (shouldTransform)
         {
             float pointer = Vector2.Dot(posNorm, directions[0]);
-            float pointer2 = Vector2.Dot(posNorm, directions[3]);
-            float pointer3 = Vector2.Dot(posNorm, directions[1]);
-            float pointer4 = Vector2.Dot(posNorm, directions[2]);
+            //float pointer2 = Vector2.Dot(posNorm, directions[3]);
+            //float pointer3 = Vector2.Dot(posNorm, directions[1]);
+            //float pointer4 = Vector2.Dot(posNorm, directions[2]);
 
             if (posTransform.x < pos.x)
             {

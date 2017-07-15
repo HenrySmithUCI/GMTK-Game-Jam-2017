@@ -30,11 +30,11 @@ public class ChaserMonster : Monster {
         Vector2 playerDir = toChase.transform.position - transform.position;
         Vector2 toDot = new Vector2(playerDir.y, playerDir.x * -1); //rotate 90 degrees
         float rotDirection = Mathf.Sign(Vector2.Dot(transform.right, toDot));
-        transform.eulerAngles += new Vector3(0, 0, rotationSpeed * Time.deltaTime * rotDirection);
+        transform.eulerAngles += new Vector3(0, 0, rotationSpeed * Time.deltaTime * rotDirection * TimeManager.TimeScale);
 
         if (burstVel != 0)
         {
-            transform.position += transform.right * burstVel * Time.deltaTime;
+            transform.position += transform.right * burstVel * Time.deltaTime * TimeManager.TimeScale;
 
             burstVel *= friction;
             if (burstVel <= stopThreshhold)

@@ -14,7 +14,7 @@
 
     public bool tick(float inc)
     {
-        value += inc;
+        value += inc * TimeManager.TimeScale;
         if (value >= maxValue)
         {
             value = 0;

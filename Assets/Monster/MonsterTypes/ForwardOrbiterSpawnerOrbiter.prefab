@@ -232,6 +232,6 @@ MonoBehaviour:
     y: 0
     width: 0
     height: 0
-  propARange: {x: 2, y: 2}
-  propBRange: {x: 2, y: 6}
+  propARange: {x: 2, y: 3}
+  propBRange: {x: 100, y: 200}
   tagForSpawned: Player

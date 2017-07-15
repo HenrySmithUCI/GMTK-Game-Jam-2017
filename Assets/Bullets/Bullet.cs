@@ -6,24 +6,23 @@ public class Bullet : MonoBehaviour {
 
     public float speed = 5;
 
-    private float life = 2;
-
     void Update()
     {
-        if(life <= 0)
-        {
-            gameObject.SetActive(false);
-        }
-
-        transform.position += transform.right * speed * Time.deltaTime;
-        life -= Time.deltaTime;
+        transform.position += transform.right * speed * Time.deltaTime * TimeManager.TimeScale;
     }
 
     public void init(Vector2 pos, float dir, float s = 5)
     {
-        life = 2;
         transform.position = pos;
         transform.eulerAngles = new Vector3(0, 0, dir);
         speed = s;
+    }
+
+    void OnBecameInvisible()
+    {
+        if (Camera.main == Camera.current)
+        {
+            gameObject.SetActive(false);
+        }
     }
 }
