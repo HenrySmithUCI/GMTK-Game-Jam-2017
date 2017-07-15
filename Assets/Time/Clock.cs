@@ -2,6 +2,7 @@
 
     private float maxValue;
     private float value;
+    public bool paused;
 
     public float Value{
         get { return value;}
@@ -14,6 +15,8 @@
 
     public bool tick(float inc)
     {
+        if (paused)
+            return false;
         value += inc * TimeManager.TimeScale;
         if (value >= maxValue)
         {
@@ -21,5 +24,15 @@
             return true;
         }
         return false;
+    }
+
+    public void reset()
+    {
+        value = 0;
+    }
+
+    public void maxOut()
+    {
+        value = maxValue;
     }
 }

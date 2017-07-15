@@ -7,39 +7,52 @@ public class Player_Movement : MonoBehaviour {
     // Use this for initialization
 
     //Public
-    public Color normalColor;
-    public Color superSonicColor;
-    public AnimationCurve dashRate;
+
+    [Header("Rotation Info")]
     public int interpolationCycle = 10;
     public float defaultInterpolationSpeed = 1.0f;
+    public float rotationSpeed  = 4.0f;
+
+    [Header("Dash Info")]
+    public AnimationCurve dashRate;
+    public float maxDashSpeed;
+    public float dashMaxTime;
+    public Clock dashTime;
+    public Color normalColor;
+    public Color superSonicColor;
+
+
+    /*
     public float dashSpeed  = 18.0f;
     public float dashDecayRate = 0.99f;
-    public float rotationSpeed  = 4.0f;
     public float dashSpeedEase = 0.98f;
     //public float rotationDashDifficulty = 1.5f;
     public float superSonicThreshhold = 1.5f;
+    */
 
     //Private
-    Rigidbody2D mainRB;
+    //Rigidbody2D mainRB;
     SpriteRenderer sr;
     bool[] keys = new bool[255];
     bool superSonic = false;
     float angle = 0.0f;
-    int cycle = 0;
-    float interpolationSpeed;
-    bool interpolated = true;
+    //int cycle = 0;
+    //float interpolationSpeed;
+    //bool interpolated = true;
     //float t = 0.5f;
-    float currentSpeed = 1;
+    float currentSpeed = 0;
     //float rotationDifficulty = 1.0f;
 
     void Start () {
+        dashTime = new Clock(dashMaxTime);
+        dashTime.maxOut();
         sr = GetComponent<SpriteRenderer>();
-        mainRB = GetComponent<Rigidbody2D>();
+        //mainRB = GetComponent<Rigidbody2D>();
         transform.eulerAngles = new Vector3(0,0,0);
-        interpolationSpeed = defaultInterpolationSpeed;
+        //interpolationSpeed = defaultInterpolationSpeed;
     }
 
-
+    /*
     void rotationInterpolation()
     {
         if (!(Input.GetKeyUp(KeyCode.A) && Input.GetKeyUp(KeyCode.D)))
@@ -76,13 +89,13 @@ public class Player_Movement : MonoBehaviour {
         cycle = 0;
         interpolationSpeed = defaultInterpolationSpeed;
         interpolated = true;
-    }
+    }*/
 
     private void Update()
     {
-        rotationInterpolation();
-        TimeManager.TimeScale = 0.1f + (currentSpeed / dashSpeed);
-        sr.color = Color.Lerp(normalColor, superSonicColor, currentSpeed / dashSpeed);
+        //rotationInterpolation();
+        TimeManager.TimeScale = 0.1f + (currentSpeed / maxDashSpeed);
+        sr.color = Color.Lerp(normalColor, superSonicColor, currentSpeed / maxDashSpeed);
 
         keys[((int)'W')] = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
         keys[((int)'S')] = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
@@ -92,41 +105,52 @@ public class Player_Movement : MonoBehaviour {
 
         if (keys['A'])
         {
-            angle += (rotationSpeed / (currentSpeed /* rotationDifficulty*/)) * Time.deltaTime * TimeManager.TimeScale;
+            angle += (rotationSpeed / (currentSpeed + 0.2f/* rotationDifficulty*/)) * Time.deltaTime * TimeManager.TimeScale;
             transform.eulerAngles = new Vector3(0, 0, angle);
-            resetInterpolation();
+            //resetInterpolation();
         }
 
         if (keys['D'])
         {
-            angle += (-rotationSpeed / (currentSpeed /* rotationDifficulty*/)) * Time.deltaTime * TimeManager.TimeScale;
+            angle += (-rotationSpeed / (currentSpeed + 0.2f/* rotationDifficulty*/)) * Time.deltaTime * TimeManager.TimeScale;
             transform.eulerAngles = new Vector3(0, 0, angle);
-            resetInterpolation();
+            //resetInterpolation();
         }
 
         if (keys['W'] && !superSonic)
         {
-            currentSpeed += dashSpeed;
+            dashTime.reset();
             goSupersonic();
         }
 
-
-
-        if (superSonic && currentSpeed > superSonicThreshhold)
+        if (superSonic)
         {
-            //rotationDifficulty = rotationDashDifficulty;
-            mainRB.velocity = new Vector2(transform.up.x * currentSpeed, transform.up.y * currentSpeed) * TimeManager.TimeScale;
-            currentSpeed *= dashSpeedEase;
-            //rotationDifficulty *= dashSpeedEase * 0.72f;
+            if(currentSpeed <= dashRate.keys[1].value) // dashRate.keys[1].value == supersonicThreshhold
+            {
+                //rotationDifficulty = 1.0f;
+
+                //mainRB.velocity = new Vector2(0,0) * TimeManager.TimeScale;
+                //currentSpeed = 1.0f;
+                stopSupersonic();
+            }
+            else
+            {
+                //rotationDifficulty = rotationDashDifficulty;
+                //mainRB.velocity = new Vector2(transform.up.x * currentSpeed, transform.up.y * currentSpeed) * TimeManager.TimeScale;
+                //currentSpeed *= dashSpeedEase;
+                //rotationDifficulty *= dashSpeedEase * 0.72f;
+            }
         }
-        else if (superSonic && currentSpeed <= superSonicThreshhold)
+
+        currentSpeed = dashRate.Evaluate(dashTime.Value / dashMaxTime) * maxDashSpeed;
+        if(dashTime.tick(Time.deltaTime))
         {
-            //rotationDifficulty = 1.0f;
-            mainRB.velocity = new Vector2(0,0) * TimeManager.TimeScale;
-            currentSpeed = 1.0f;
-            stopSupersonic();
+            dashTime.maxOut();
+            dashTime.paused = true;
         }
-        
+
+        transform.position += transform.up * currentSpeed * Time.deltaTime * TimeManager.TimeScale;
+
         if (superSonic && keys['W'])
         { 
 
@@ -136,6 +160,8 @@ public class Player_Movement : MonoBehaviour {
     void goSupersonic()
     {
         superSonic = true;
+        dashTime.reset();
+        dashTime.paused = false;
     }
 
     void stopSupersonic()

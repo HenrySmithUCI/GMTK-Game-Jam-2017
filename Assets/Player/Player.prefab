@@ -130,15 +130,37 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5309d3cb713134f40a090ecd4c7d497b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  normalColor: {r: 0.0627451, g: 0.3647059, b: 0.46274513, a: 1}
-  superSonicColor: {r: 0.014489633, g: 0.74735177, b: 0.9852941, a: 1}
   interpolationCycle: 10
   defaultInterpolationSpeed: 2.1
-  dashSpeed: 8
-  dashDecayRate: 0.99
-  rotationSpeed: 2000
-  dashSpeedEase: 0.98
-  superSonicThreshhold: 2
+  rotationSpeed: 1000
+  dashRate:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 2
+      time: 0
+      value: 1
+      inSlope: -0.11831507
+      outSlope: -0.11831507
+      tangentMode: 34
+    - serializedVersion: 2
+      time: 0.7948786
+      value: 0.9059539
+      inSlope: -0.36471143
+      outSlope: -0.36471143
+      tangentMode: 0
+    - serializedVersion: 2
+      time: 1
+      value: 0
+      inSlope: -4.4166718
+      outSlope: -4.4166718
+      tangentMode: 34
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 0
+  maxDashSpeed: 10
+  dashMaxTime: 0.5
+  normalColor: {r: 0.0627451, g: 0.3647059, b: 0.46274513, a: 1}
+  superSonicColor: {r: 0.014489633, g: 0.74735177, b: 0.9852941, a: 1}
 --- !u!114 &114802308539604450
 MonoBehaviour:
   m_ObjectHideFlags: 1
