@@ -15,7 +15,7 @@ public class Bullet : MonoBehaviour {
             gameObject.SetActive(false);
         }
 
-        transform.position += (transform.right + transform.up).normalized * speed * Time.deltaTime;
+        transform.position += transform.right * speed * Time.deltaTime;
         life -= Time.deltaTime;
     }
 
