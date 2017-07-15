@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Shooter : MonoBehaviour {
+public class RandomShooter : MonoBehaviour {
 
     public GameObjectSpawnPool pool;
     public float interval = 0.5f;
@@ -12,6 +12,10 @@ public class Shooter : MonoBehaviour {
     void Start()
     {
         c = new Clock(interval);
+        if (pool == null)
+        {
+            pool = GameObject.Find("BulletPool").GetComponent<GameObjectSpawnPool>();
+        }
     }
 
 	void Update () {

@@ -125,7 +125,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   pool: {fileID: 622567554}
-  interval: 0.1
+  interval: 0.5
 --- !u!1001 &518138038
 Prefab:
   m_ObjectHideFlags: 0
@@ -186,6 +186,7 @@ GameObject:
   m_Component:
   - component: {fileID: 622567555}
   - component: {fileID: 622567554}
+  - component: {fileID: 622567556}
   m_Layer: 0
   m_Name: BulletPool
   m_TagString: Untagged
@@ -220,6 +221,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &622567556
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 622567553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26139b6812220ba4ba59c0c6bf48ccfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 1392995733022488, guid: 584c15dda67979a42906bf96deea1f3b, type: 2}
+  interval: 1
+  maxMonsters: 5
 --- !u!1 &960013783 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 1392995733022488, guid: 584c15dda67979a42906bf96deea1f3b,
@@ -365,6 +380,14 @@ Prefab:
     - target: {fileID: 4816098852877024, guid: 584c15dda67979a42906bf96deea1f3b, type: 2}
       propertyPath: m_RootOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: pool
+      value: 
+      objectReference: {fileID: 622567554}
+    - target: {fileID: 1606500102387414, guid: 584c15dda67979a42906bf96deea1f3b, type: 2}
+      propertyPath: m_Name
+      value: Arrow
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 584c15dda67979a42906bf96deea1f3b, type: 2}
