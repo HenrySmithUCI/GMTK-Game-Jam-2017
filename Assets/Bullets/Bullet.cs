@@ -8,16 +8,16 @@ public class Bullet : MonoBehaviour {
 
     private float life = 2;
 
-	void FixedUpdate ()
+    void Update()
     {
         if(life <= 0)
         {
             gameObject.SetActive(false);
         }
 
-        transform.position += (transform.right + transform.up).normalized * speed * Time.fixedDeltaTime;
-        life -= Time.fixedDeltaTime;
-	}
+        transform.position += (transform.right + transform.up).normalized * speed * Time.deltaTime;
+        life -= Time.deltaTime;
+    }
 
     public void init(Vector2 pos, float dir)
     {
