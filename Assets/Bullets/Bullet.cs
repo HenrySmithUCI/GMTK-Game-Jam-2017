@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-    public float speed = 3;
+    public float speed = 5;
 
     private float life = 2;
 
@@ -19,10 +19,11 @@ public class Bullet : MonoBehaviour {
         life -= Time.deltaTime;
     }
 
-    public void init(Vector2 pos, float dir)
+    public void init(Vector2 pos, float dir, float s = 5)
     {
         life = 2;
         transform.position = pos;
         transform.eulerAngles = new Vector3(0, 0, dir);
+        speed = s;
     }
 }

@@ -5,14 +5,14 @@ using UnityEngine;
 public class GameObjectSpawnPool : MonoBehaviour {
 
     public GameObject pooledObject;
-    public int pooledAmount = 20;
+    public int initialPool = 20;
 
     private List<GameObject> pool;
 
 	void Start ()
     {
         pool = new List<GameObject>();
-        for (int i = 0; i < pooledAmount; ++i)
+        for (int i = 0; i < initialPool; ++i)
         {
             expandPool();
         }
