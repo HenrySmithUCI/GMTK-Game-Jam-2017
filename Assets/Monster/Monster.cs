@@ -4,13 +4,11 @@ using UnityEngine;
 
 public class Monster : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    public float rotationSpeed;
+    public float forwardSpeed;
 	
-	// Update is called once per frame
 	void Update () {
-		
+        transform.eulerAngles += new Vector3(0, 0, rotationSpeed * Time.deltaTime);
+        transform.localPosition += transform.right * forwardSpeed * Time.deltaTime;
 	}
 }
