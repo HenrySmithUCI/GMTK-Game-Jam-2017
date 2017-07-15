@@ -5,25 +5,37 @@ using UnityEngine;
 public class Player_Movement : MonoBehaviour {
 
     // Use this for initialization
+
+    //Public
+
+    public int interpolationCycle = 10;
+    public float defaultInterpolationSpeed = 1.0f;
+    public float dashSpeed  = 18.0f;
+    public float dashDecayRate = 0.99f;
+    public float rotationSpeed  = 4.0f;
+    public float dashSpeedEase = 0.98f;
+    public float rotationDashDifficulty = 1.5f;
+
+    //Private
     Rigidbody2D mainRB;
     bool[] keys = new bool[255];
     bool superSonic = false;
     float angle = 0.0f;
-    float rotationSpeed = 2.0f;
-    int interpolationCycle = 10;
     int cycle = 0;
-    float defaultInterpolationSpeed = 1.0f;
     float interpolationSpeed;
     bool interpolated = true;
+    float t = 0.5f;
+    float currentSpeed = 1;
+    float rotationDifficulty = 1.0f;
 
     void Start () {
         mainRB = GetComponent<Rigidbody2D>();
         transform.eulerAngles = new Vector3(0,0,0);
         interpolationSpeed = defaultInterpolationSpeed;
     }
-	
-	// Update is called once per frame
-	void Update ()
+
+
+    void rotationInterpolation()
     {
         if (!(Input.GetKeyUp(KeyCode.A) && Input.GetKeyUp(KeyCode.D)))
         {
@@ -52,6 +64,12 @@ public class Player_Movement : MonoBehaviour {
         {
             resetInterpolation();
         }
+    }
+	
+	// Update is called once per frame
+	void Update ()
+    {
+        rotationInterpolation();
         
     }
 
@@ -64,28 +82,52 @@ public class Player_Movement : MonoBehaviour {
 
     private void FixedUpdate()
     {
-        keys[((int) 'W')] = Input.GetKey(KeyCode.W);
+        keys[((int)'W')] = Input.GetKey(KeyCode.W);
         keys[((int)'S')] = Input.GetKey(KeyCode.S);
         keys[((int)'A')] = Input.GetKey(KeyCode.A);
         keys[((int)'D')] = Input.GetKey(KeyCode.D);
- 
-           
-        if (keys['A'] && !superSonic)
+
+
+        if (keys['A'])
         {
-            angle += rotationSpeed;
+            angle += (rotationSpeed / (currentSpeed * rotationDifficulty));
+            angle = angle;
             transform.eulerAngles = new Vector3(0, 0, angle);
             resetInterpolation();
         }
-        
-        if (keys['D'] && !superSonic)
+
+        if (keys['D'])
         {
-            angle += -rotationSpeed;
+            angle += (-rotationSpeed / (currentSpeed * rotationDifficulty));
+            angle = angle;
             transform.eulerAngles = new Vector3(0, 0, angle);
             interpolated = true;
         }
 
+        if (keys['W'] && !superSonic)
+        {
+            currentSpeed += dashSpeed;
+            superSonic = true;
+        }
 
+        if (superSonic && currentSpeed > 1.5f)
+        {
+            rotationDifficulty = rotationDashDifficulty;
+            mainRB.velocity = new Vector2(transform.up.x * currentSpeed, transform.up.y * currentSpeed);
+            currentSpeed *= dashSpeedEase;
+            rotationDifficulty *= dashSpeedEase * 0.72f;
+        }
+        else if (superSonic && currentSpeed <= 1.5f)
+        {
+            rotationDifficulty = 1.0f;
+            mainRB.velocity = new Vector2(0,0);
+            currentSpeed = 1.0f;
+            superSonic = false;
+        }
+        
+        if (superSonic && keys['W'])
+        { 
 
-
+        }
     }
 }
