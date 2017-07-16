@@ -20,6 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4805426534643912}
   - component: {fileID: 212571704043659268}
+  - component: {fileID: 60957510065046524}
   m_Layer: 0
   m_Name: WhiteNub
   m_TagString: Untagged
@@ -35,6 +36,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4836248269175322}
+  - component: {fileID: 50807525833829800}
+  - component: {fileID: 60014179115197984}
+  - component: {fileID: 114868892766665708}
   m_Layer: 0
   m_Name: SuperSonic
   m_TagString: Untagged
@@ -54,7 +58,7 @@ GameObject:
   - component: {fileID: 114178331359871816}
   - component: {fileID: 50471466674684538}
   - component: {fileID: 114802308539604450}
-  - component: {fileID: 61201124156791230}
+  - component: {fileID: 60653358961456448}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -123,8 +127,55 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
---- !u!61 &61201124156791230
-BoxCollider2D:
+--- !u!50 &50807525833829800
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1508856024625120}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
+--- !u!60 &60014179115197984
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1508856024625120}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 0.04, y: 0.04}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 1.5}
+      - {x: 1, y: -0.5}
+      - {x: -1, y: -0.5}
+--- !u!60 &60653358961456448
+PolygonCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
@@ -135,7 +186,7 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: 0.9360756}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
@@ -145,9 +196,38 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  serializedVersion: 2
-  m_Size: {x: 0.36230564, y: 0.28691804}
-  m_EdgeRadius: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 2}
+      - {x: -1.7, y: -1}
+      - {x: 1.7, y: -1}
+--- !u!60 &60957510065046524
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1355687255630218}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 4, y: 4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 1.5}
+      - {x: 1, y: -0.5}
+      - {x: -1, y: -0.5}
 --- !u!114 &114178331359871816
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -190,6 +270,8 @@ MonoBehaviour:
   dashMaxTime: 0.5
   normalColor: {r: 0.0627451, g: 0.3647059, b: 0.46274513, a: 1}
   superSonicColor: {r: 0.014489633, g: 0.74735177, b: 0.9852941, a: 1}
+  superSonic: 0
+  playerBulletPool: {fileID: 0}
 --- !u!114 &114802308539604450
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -204,6 +286,18 @@ MonoBehaviour:
   cornerThresholdX: 2
   cornerThresholdY: 1.2
   cornerThreshAngle: 0.5
+--- !u!114 &114868892766665708
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1508856024625120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 332f2617e7648444f96f6576beb9dc99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pm: {fileID: 114178331359871816}
 --- !u!212 &212571704043659268
 SpriteRenderer:
   m_ObjectHideFlags: 1
