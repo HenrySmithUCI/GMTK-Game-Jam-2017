@@ -189,6 +189,7 @@ GameObject:
   - component: {fileID: 309562390}
   - component: {fileID: 309562391}
   - component: {fileID: 309562392}
+  - component: {fileID: 309562393}
   m_Layer: 0
   m_Name: Manager
   m_TagString: Untagged
@@ -238,6 +239,19 @@ MonoBehaviour:
   healthGainFromBullets: 10
   healthLostFromBullets: 20
   healthLostFromEnemies: 40
+--- !u!114 &309562393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 309562389}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 19f4d8e968b2d7344af47ff28db804a5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  spawners: []
+  score: 0
 --- !u!1001 &390562585
 Prefab:
   m_ObjectHideFlags: 0
@@ -678,7 +692,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!199 &1367054237
 ParticleSystemRenderer:
   serializedVersion: 4
@@ -790,7 +804,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1874223347
+  randomSeed: 1784296244
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -4081,6 +4095,11 @@ PolygonCollider2D:
     - - {x: 0, y: 2}
       - {x: -1.7, y: -1}
       - {x: 1.7, y: -1}
+--- !u!4 &1715383292 stripped
+Transform:
+  m_PrefabParentObject: {fileID: 4118819030615948, guid: 3b57b5d668b57bd4388429c4e70532eb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1012432008}
 --- !u!1001 &1932131446
 Prefab:
   m_ObjectHideFlags: 0
@@ -4176,4 +4195,67 @@ Prefab:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a0a4ed36c4fc5104297780068a0e39ca, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &2065737277
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1715383292}
+    m_Modifications:
+    - target: {fileID: 4300038920049830, guid: 7a8bdfda176ef3147a6412f9995a4d4a, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: 0.059999228
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300038920049830, guid: 7a8bdfda176ef3147a6412f9995a4d4a, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.38500842
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300038920049830, guid: 7a8bdfda176ef3147a6412f9995a4d4a, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300038920049830, guid: 7a8bdfda176ef3147a6412f9995a4d4a, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: -0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300038920049830, guid: 7a8bdfda176ef3147a6412f9995a4d4a, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300038920049830, guid: 7a8bdfda176ef3147a6412f9995a4d4a, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300038920049830, guid: 7a8bdfda176ef3147a6412f9995a4d4a, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 0.7071068
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300038920049830, guid: 7a8bdfda176ef3147a6412f9995a4d4a, type: 2}
+      propertyPath: m_RootOrder
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300038920049830, guid: 7a8bdfda176ef3147a6412f9995a4d4a, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300038920049830, guid: 7a8bdfda176ef3147a6412f9995a4d4a, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4300038920049830, guid: 7a8bdfda176ef3147a6412f9995a4d4a, type: 2}
+      propertyPath: m_LocalScale.z
+      value: 6.6666694
+      objectReference: {fileID: 0}
+    - target: {fileID: 198398301053772440, guid: 7a8bdfda176ef3147a6412f9995a4d4a,
+        type: 2}
+      propertyPath: randomSeed
+      value: -1919259582
+      objectReference: {fileID: 0}
+    - target: {fileID: 1413780514388750, guid: 7a8bdfda176ef3147a6412f9995a4d4a, type: 2}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 7a8bdfda176ef3147a6412f9995a4d4a, type: 2}
   m_IsPrefabParent: 0

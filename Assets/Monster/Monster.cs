@@ -13,4 +13,13 @@ public abstract class Monster : MonoBehaviour {
         Bullet b = pool.getInactivePooledObject().GetComponent<Bullet>();
         b.init(transform.position, Random.Range(0, 360));
     }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if(other.tag == "playerBullet")
+        {
+            ProgressManager.Instance.increment();
+            Destroy(gameObject);
+        }
+    }
 }
