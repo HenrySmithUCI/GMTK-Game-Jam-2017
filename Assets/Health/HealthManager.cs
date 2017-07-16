@@ -9,6 +9,8 @@ public class HealthManager : MonoBehaviour {
     public float health;
     public float maxHealth = 100;
     public float decayRate = 10;
+    public float healthGainFromBullets = 10;
+    public float healthLostFromBullets = 20;
 
 	void Start ()
     {
@@ -61,6 +63,15 @@ public class HealthManager : MonoBehaviour {
     {
         get { return instance.decayRate; }
         set { instance.decayRate = value; }
+    }
+
+    public static void increaseHealth(float health)
+    {
+        instance.health += health;
+        if (Health > MaxHealth)
+        {
+            Health = MaxHealth;
+        }
     }
 
     public static HealthManager Instance

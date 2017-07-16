@@ -235,6 +235,8 @@ MonoBehaviour:
   health: 0
   maxHealth: 100
   decayRate: 10
+  healthGainFromBullets: 10
+  healthLostFromBullets: 20
 --- !u!1001 &390562585
 Prefab:
   m_ObjectHideFlags: 0
@@ -285,6 +287,38 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: a0a4ed36c4fc5104297780068a0e39ca, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &623475290 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1355687255630218, guid: 3b57b5d668b57bd4388429c4e70532eb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1012432008}
+--- !u!60 &623475293
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 623475290}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 4, y: 4}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 1.5}
+      - {x: 1, y: -0.5}
+      - {x: -1, y: -0.5}
 --- !u!1001 &856243256
 Prefab:
   m_ObjectHideFlags: 0
@@ -497,9 +531,86 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 61201124156791230, guid: 3b57b5d668b57bd4388429c4e70532eb,
+        type: 2}
+      propertyPath: m_Offset.y
+      value: 0.26591194
+      objectReference: {fileID: 0}
+    - target: {fileID: 61201124156791230, guid: 3b57b5d668b57bd4388429c4e70532eb,
+        type: 2}
+      propertyPath: m_Size.y
+      value: 1.7271886
+      objectReference: {fileID: 0}
+    - target: {fileID: 61201124156791230, guid: 3b57b5d668b57bd4388429c4e70532eb,
+        type: 2}
+      propertyPath: m_Offset.x
+      value: -0.003962636
+      objectReference: {fileID: 0}
+    - target: {fileID: 61201124156791230, guid: 3b57b5d668b57bd4388429c4e70532eb,
+        type: 2}
+      propertyPath: m_Size.x
+      value: 1.1227095
+      objectReference: {fileID: 0}
+    - target: {fileID: 1783549756113692, guid: 3b57b5d668b57bd4388429c4e70532eb, type: 2}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 61201124156791230, guid: 3b57b5d668b57bd4388429c4e70532eb, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 3b57b5d668b57bd4388429c4e70532eb, type: 2}
   m_IsPrefabParent: 0
+--- !u!1 &1012432009 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1508856024625120, guid: 3b57b5d668b57bd4388429c4e70532eb,
+    type: 2}
+  m_PrefabInternal: {fileID: 1012432008}
+--- !u!60 &1012432010
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1012432009}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 0.04, y: 0.04}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 1.5}
+      - {x: 1, y: -0.5}
+      - {x: -1, y: -0.5}
+--- !u!50 &1012432011
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1012432009}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1001 &1089966237
 Prefab:
   m_ObjectHideFlags: 0
@@ -555,20 +666,33 @@ GameObject:
   m_PrefabParentObject: {fileID: 1783549756113692, guid: 3b57b5d668b57bd4388429c4e70532eb,
     type: 2}
   m_PrefabInternal: {fileID: 1012432008}
---- !u!111 &1715383286
-Animation:
+--- !u!60 &1715383286
+PolygonCollider2D:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1715383285}
   m_Enabled: 1
-  serializedVersion: 3
-  m_Animation: {fileID: 0}
-  m_Animations: []
-  m_WrapMode: 0
-  m_PlayAutomatically: 1
-  m_AnimatePhysics: 0
-  m_CullingType: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 4, y: 4}
+    newSize: {x: 0.04, y: 0.04}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: 0, y: 2}
+      - {x: -1.7, y: -1}
+      - {x: 1.7, y: -1}
 --- !u!1001 &1932131446
 Prefab:
   m_ObjectHideFlags: 0

@@ -20,7 +20,7 @@ public class Player_Movement : MonoBehaviour {
     public Clock dashTime;
     public Color normalColor;
     public Color superSonicColor;
-
+    public bool superSonic;
 
     /*
     public float dashSpeed  = 18.0f;
@@ -34,7 +34,6 @@ public class Player_Movement : MonoBehaviour {
     //Rigidbody2D mainRB;
     SpriteRenderer sr;
     bool[] keys = new bool[255];
-    bool superSonic = false;
     float angle = 0.0f;
     //int cycle = 0;
     //float interpolationSpeed;
@@ -97,7 +96,7 @@ public class Player_Movement : MonoBehaviour {
         TimeManager.TimeScale = 0.1f + (currentSpeed / maxDashSpeed);
         sr.color = Color.Lerp(normalColor, superSonicColor, currentSpeed / maxDashSpeed);
 
-        keys[((int)'W')] = Input.GetKey(KeyCode.W) || Input.GetKey(KeyCode.UpArrow);
+        keys[((int)'W')] = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
         keys[((int)'S')] = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
         keys[((int)'A')] = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
         keys[((int)'D')] = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
@@ -117,11 +116,12 @@ public class Player_Movement : MonoBehaviour {
             //resetInterpolation();
         }
 
-        if (keys['W'] && !superSonic)
+        if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && !superSonic)
         {
-            dashTime.reset();
             goSupersonic();
         }
+
+        currentSpeed = dashRate.Evaluate(dashTime.Value / dashMaxTime) * maxDashSpeed;
 
         if (superSonic)
         {
@@ -142,7 +142,6 @@ public class Player_Movement : MonoBehaviour {
             }
         }
 
-        currentSpeed = dashRate.Evaluate(dashTime.Value / dashMaxTime) * maxDashSpeed;
         if(dashTime.tick(Time.deltaTime))
         {
             dashTime.maxOut();
@@ -167,5 +166,14 @@ public class Player_Movement : MonoBehaviour {
     void stopSupersonic()
     {
         superSonic = false;
+    }
+
+    void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.tag == "Bullet" && superSonic)
+        {
+            other.gameObject.SetActive(false);
+            HealthManager.increaseHealth(HealthManager.Instance.healthGainFromBullets);
+        }
     }
 }

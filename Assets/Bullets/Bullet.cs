@@ -4,7 +4,16 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
+    public static Camera mainCam;
     public float speed = 5;
+
+    void Start()
+    {
+        if (mainCam == null)
+        {
+            mainCam = Camera.main;
+        }
+    }
 
     void Update()
     {
@@ -20,7 +29,7 @@ public class Bullet : MonoBehaviour {
 
     void OnBecameInvisible()
     {
-        if (Camera.main == Camera.current)
+        if (mainCam == Camera.current)
         {
             gameObject.SetActive(false);
         }
