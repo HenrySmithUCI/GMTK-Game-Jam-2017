@@ -176,4 +176,9 @@ public class Player_Movement : MonoBehaviour {
             HealthManager.increaseHealth(HealthManager.Instance.healthGainFromBullets);
         }
     }
+
+    private void Die()
+    {
+        enabled = false;
+    }
 }

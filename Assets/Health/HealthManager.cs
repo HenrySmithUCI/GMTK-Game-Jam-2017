@@ -12,8 +12,11 @@ public class HealthManager : MonoBehaviour {
     public float healthGainFromBullets = 10;
     public float healthLostFromBullets = 20;
 
+    private bool playerAlive = true;
+
 	void Start ()
     {
+        playerAlive = true;
         if (null == instance)
         {
             instance = this;
@@ -28,23 +31,29 @@ public class HealthManager : MonoBehaviour {
 
     void restart()
     {
+        playerAlive = true;
         health = maxHealth / 2;
     }
 
     void Update()
     {
-        health -= decayRate * Time.deltaTime * TimeManager.TimeScale;
-
-        if(health <= 0)
+        if (playerAlive)
         {
-            PlayerDie();
+            health -= decayRate * Time.deltaTime * TimeManager.TimeScale;
+
+            if (health <= 0)
+            {
+                PlayerDie();
+            }
         }
     }
 
     void PlayerDie()
     {
         print("Dead!!");
-        restart();
+        TimeManager.TimeScale = 0.01f;
+        GameObject.Find("Player").GetComponent<Player_Movement>().BroadcastMessage("Die");
+        playerAlive = false;
     }
 
     public static float Health
