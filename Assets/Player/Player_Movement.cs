@@ -22,6 +22,7 @@ public class Player_Movement : MonoBehaviour {
     public Color superSonicColor;
     public bool superSonic;
 
+    public GameObjectSpawnPool playerBulletPool = null;
     /*
     public float dashSpeed  = 18.0f;
     public float dashDecayRate = 0.99f;
@@ -49,6 +50,10 @@ public class Player_Movement : MonoBehaviour {
         //mainRB = GetComponent<Rigidbody2D>();
         transform.eulerAngles = new Vector3(0,0,0);
         //interpolationSpeed = defaultInterpolationSpeed;
+        if (playerBulletPool == null)
+        {
+            playerBulletPool = GameObject.Find("PlayerBulletPool").GetComponent<GameObjectSpawnPool>();
+        }
     }
 
     /*
@@ -102,6 +107,16 @@ public class Player_Movement : MonoBehaviour {
         keys[((int)'D')] = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
 
 
+        Debug.Log(keys['W']);
+        if ((!superSonic) && keys['W'])
+        {
+
+            GameObject bullet = playerBulletPool.getInactivePooledObject();
+            Bullet playerBullet = bullet.GetComponent<Bullet>();
+            playerBullet.init(new Vector2(transform.position.x, transform.position.y), Mathf.Atan2(transform.up.y, transform.up.x) * (180 / Mathf.PI), 12.0f);
+            bullet.SetActive(true);
+        }
+
         if (keys['A'])
         {
             angle += (rotationSpeed / (currentSpeed + 0.2f/* rotationDifficulty*/)) * Time.deltaTime * TimeManager.TimeScale;
@@ -150,10 +165,6 @@ public class Player_Movement : MonoBehaviour {
 
         transform.position += transform.up * currentSpeed * Time.deltaTime * TimeManager.TimeScale;
 
-        if (superSonic && keys['W'])
-        { 
-
-        }
     }
 
     void goSupersonic()
