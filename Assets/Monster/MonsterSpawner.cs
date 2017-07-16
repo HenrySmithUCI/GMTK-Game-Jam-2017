@@ -9,6 +9,8 @@ public class MonsterSpawner : MonoBehaviour {
     public int maxMonsters;
     public Rect spawnSpace;
 
+
+    public bool useDefaults = false;
     [Header("radius or rotationSpeed")]
     public Vector2 propARange = new Vector2(2,6);
 
@@ -16,13 +18,13 @@ public class MonsterSpawner : MonoBehaviour {
     public Vector2 propBRange= new Vector2(2,6);
 
     public string tagForSpawned = "Player";
+    private List<GameObject> children;
 
-    private int numMonsters;
     private Clock timer;
 
 	void Start ()
     {
-        numMonsters = 0;
+        children = new List<GameObject>();
         timer = new Clock(interval);
 	}
 
@@ -30,11 +32,18 @@ public class MonsterSpawner : MonoBehaviour {
     {
         if (timer.tick(Time.deltaTime))
         {
-            if (numMonsters < maxMonsters)
+            print(children.Count);
+            if (children.Count < maxMonsters)
             {
                 Monster m = Instantiate(monster,transform);
-                m.init(new Vector2(Random.Range(spawnSpace.xMin, spawnSpace.xMax), Random.Range(spawnSpace.yMin, spawnSpace.yMax)), new Vector2(Random.Range(propARange.x, propARange.y), Random.Range(propBRange.x, propBRange.y)), tagForSpawned);
-                numMonsters += 1;
+                if (false == useDefaults)
+                {
+                    m.init(new Vector2(Random.Range(spawnSpace.xMin, spawnSpace.xMax), Random.Range(spawnSpace.yMin, spawnSpace.yMax)), new Vector2(Random.Range(propARange.x, propARange.y), Random.Range(propBRange.x, propBRange.y)), tagForSpawned);
+                }
+                else
+                {
+                    m.transform.position = new Vector2(Random.Range(spawnSpace.xMin, spawnSpace.xMax), Random.Range(spawnSpace.yMin, spawnSpace.yMax));
+                }
             }
         }
     }

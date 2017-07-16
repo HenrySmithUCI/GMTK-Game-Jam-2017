@@ -13,7 +13,7 @@ public class HealthManager : MonoBehaviour {
     public float healthLostFromBullets = 20;
     public float healthLostFromEnemies = 40;
 
-    private bool playerAlive = true;
+    public bool playerAlive = true;
 
 	void Start ()
     {
@@ -51,7 +51,6 @@ public class HealthManager : MonoBehaviour {
 
     void PlayerDie()
     {
-        print("Dead!!");
         health = 0;
         TimeManager.TimeScale = 0.01f;
         GameObject.Find("Player").GetComponent<Player_Movement>().BroadcastMessage("Die");

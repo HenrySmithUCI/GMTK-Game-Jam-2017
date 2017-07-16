@@ -7,7 +7,7 @@ public class Hitbox : MonoBehaviour {
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Bullet" && pm.superSonic == false)
+        if (other.tag == "Bullet")
         {
             HealthManager.increaseHealth(-HealthManager.Instance.healthLostFromBullets);
             other.gameObject.SetActive(false);

@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 33976012525093650}
   - component: {fileID: 23181205547749798}
   - component: {fileID: 61266043676400712}
+  - component: {fileID: 114518942313098940}
   m_Layer: 0
   m_Name: PlayerBullet
   m_TagString: playerBullet
@@ -56,7 +57,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: f6a611977749b1f4296df1872c9de5fa, type: 2}
+  - {fileID: 2100000, guid: 963fe47ebda230a4eacd84c51cf75912, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -119,3 +120,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 3
+--- !u!114 &114518942313098940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1361505599373772}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc693aba4c12c8e4f9398dcc146b2457, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  particlePool: {fileID: 0}
+  rate: 0.02
+  color: {r: 0, g: 1, b: 0, a: 1}

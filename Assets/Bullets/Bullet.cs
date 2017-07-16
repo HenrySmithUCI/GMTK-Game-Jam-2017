@@ -4,20 +4,21 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-    public static Camera mainCam;
     public float speed = 5;
 
     void Start()
     {
-        if (mainCam == null)
-        {
-            mainCam = Camera.main;
-        }
     }
 
     void Update()
     {
         transform.position += transform.right * speed * Time.deltaTime * TimeManager.TimeScale;
+        Vector3 position = Camera.main.WorldToViewportPoint(transform.position);
+        if (position.x < 0 || position.x > 1 || position.y < 0 || position.y > 1)
+        {
+
+            gameObject.SetActive(false);
+        }
     }
 
     public void init(Vector2 pos, float dir, float s = 5)
@@ -25,13 +26,5 @@ public class Bullet : MonoBehaviour {
         transform.position = pos;
         transform.eulerAngles = new Vector3(0, 0, dir);
         speed = s;
-    }
-
-    void OnBecameInvisible()
-    {
-        if (mainCam == Camera.current)
-        {
-            gameObject.SetActive(false);
-        }
     }
 }

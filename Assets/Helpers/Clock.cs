@@ -6,6 +6,11 @@
 
     public float Value{
         get { return value;}
+        set { this.value = value;}
+    }
+
+    public float MaxValue{
+        get { return maxValue; }
     }
 
     public Clock(float max){

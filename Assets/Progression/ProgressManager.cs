@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class ProgressManager : MonoBehaviour {
 
-    public MonsterSpawner[] spawners;
+    public Monster[] monsters;
 
     private static ProgressManager instance;
+    private GameObject player;
 
     public int score;
 
@@ -15,6 +16,7 @@ public class ProgressManager : MonoBehaviour {
         if (null == instance)
         {
             instance = this;
+            player = GameObject.Find("Player");
         }
         else
         {
@@ -25,18 +27,19 @@ public class ProgressManager : MonoBehaviour {
 
     public void increment()
     {
-        score += 1;
-        if(score % 5 == 0)
+        if(player == null)
         {
-            if (spawners.Length >= score / 5)
-            {
-                Instantiate(instance.spawners[score / 5]);
-                if(score >= 15)
-                {
-                    
-                }
-            }
+            return;
         }
+        score += 1;
+        Monster m = Instantiate(monsters[Random.Range(0, monsters.Length)]);
+        do
+        {
+            m.transform.position = Random.insideUnitCircle * Random.Range(0f, 5f);
+        } while(Vector2.Distance(m.transform.position, player.transform.position) < 3);
+        m.transform.localEulerAngles = new Vector3(0, 0, Random.Range(0, 360));
+        m.parent = true;
+
     }
 
     public static ProgressManager Instance

@@ -27,7 +27,11 @@ public class ChaserMonster : Monster {
         {
             init(transform.position, new Vector2(rotationSpeed, burstSpeed), chaseTag == null ? "Player" : chaseTag);
         }
-        Vector2 playerDir = toChase.transform.position - transform.position;
+        Vector2 playerDir = transform.up;
+        if (toChase != null)
+        {
+            playerDir = toChase.transform.position - transform.position;
+        }
         Vector2 toDot = new Vector2(playerDir.y, playerDir.x * -1); //rotate 90 degrees
         float rotDirection = Mathf.Sign(Vector2.Dot(transform.right, toDot));
         transform.eulerAngles += new Vector3(0, 0, rotationSpeed * Time.deltaTime * rotDirection * TimeManager.TimeScale);

@@ -11,7 +11,8 @@ public class Player_Movement : MonoBehaviour {
     [Header("Rotation Info")]
     public int interpolationCycle = 10;
     public float defaultInterpolationSpeed = 1.0f;
-    public float rotationSpeed  = 4.0f;
+    public float highRotationSpeed = 200f;
+    public float lowRotationSpeed = 100f;
 
     [Header("Dash Info")]
     public AnimationCurve dashRate;
@@ -23,85 +24,30 @@ public class Player_Movement : MonoBehaviour {
     public bool superSonic;
 
     public GameObjectSpawnPool playerBulletPool = null;
-    /*
-    public float dashSpeed  = 18.0f;
-    public float dashDecayRate = 0.99f;
-    public float dashSpeedEase = 0.98f;
-    //public float rotationDashDifficulty = 1.5f;
-    public float superSonicThreshhold = 1.5f;
-    */
 
     //Private
     //Rigidbody2D mainRB;
     SpriteRenderer sr;
     bool[] keys = new bool[255];
-    float angle = 0.0f;
-    //int cycle = 0;
-    //float interpolationSpeed;
-    //bool interpolated = true;
-    //float t = 0.5f;
+    //float angle = 0.0f;
     float currentSpeed = 0;
-    //float rotationDifficulty = 1.0f;
-    GameObject trail = null;
+    float rotationSpeed  = 4.0f;
 
     void Start () {
         dashTime = new Clock(dashMaxTime);
         dashTime.maxOut();
         sr = GetComponent<SpriteRenderer>();
-        //mainRB = GetComponent<Rigidbody2D>();
-        transform.eulerAngles = new Vector3(0,0,0);
-        //interpolationSpeed = defaultInterpolationSpeed;
         if (playerBulletPool == null)
         {
             playerBulletPool = GameObject.Find("PlayerBulletPool").GetComponent<GameObjectSpawnPool>();
         }
-        trail = GameObject.Find("Thruster");
-        trail.SetActive(false);
     }
 
-    /*
-    void rotationInterpolation()
-    {
-        if (!(Input.GetKeyUp(KeyCode.A) && Input.GetKeyUp(KeyCode.D)))
-        {
-            if (interpolated && Input.GetKeyUp(KeyCode.A))
-            {
-                if (interpolationSpeed < 0)
-                    interpolationSpeed = -interpolationSpeed;
-                interpolated = false;
-            }
-            else if (interpolated && Input.GetKeyUp(KeyCode.D))
-            {
-                if (interpolationSpeed > 0)
-                    interpolationSpeed = -interpolationSpeed;
-                interpolated = false;
-            }
-        }
-
-        if ((!interpolated) && cycle <= interpolationCycle)
-        {
-            cycle += 1;
-            angle += interpolationSpeed;
-            transform.eulerAngles = new Vector3(0, 0, angle);
-            interpolationSpeed *= 0.99f;
-        }
-        else if (cycle > interpolationCycle)
-        {
-            resetInterpolation();
-        }
-    }
-
-    void resetInterpolation()
-    {
-        cycle = 0;
-        interpolationSpeed = defaultInterpolationSpeed;
-        interpolated = true;
-    }*/
 
     private void Update()
     {
         //rotationInterpolation();
-        TimeManager.TimeScale = 0.1f + (currentSpeed / maxDashSpeed);
+        TimeManager.TimeScale = 0.2f + (currentSpeed / maxDashSpeed);
         sr.color = Color.Lerp(normalColor, superSonicColor, currentSpeed / maxDashSpeed);
 
         keys[((int)'W')] = Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow);
@@ -117,22 +63,14 @@ public class Player_Movement : MonoBehaviour {
             bullet.SetActive(true);
         }
 
-
-        
-        
-
         if (keys['A'])
         {
-            angle += (rotationSpeed / (currentSpeed + 0.2f/* rotationDifficulty*/)) * Time.deltaTime * TimeManager.TimeScale;
-            transform.eulerAngles = new Vector3(0, 0, angle);
-            //resetInterpolation();
+            transform.eulerAngles += new Vector3(0, 0, (rotationSpeed / (currentSpeed + 0.2f)) * Time.deltaTime * TimeManager.TimeScale);
         }
 
         if (keys['D'])
         {
-            angle += (-rotationSpeed / (currentSpeed + 0.2f/* rotationDifficulty*/)) * Time.deltaTime * TimeManager.TimeScale;
-            transform.eulerAngles = new Vector3(0, 0, angle);
-            //resetInterpolation();
+                transform.eulerAngles += new Vector3(0, 0, (-rotationSpeed / (currentSpeed + 0.2f)) * Time.deltaTime * TimeManager.TimeScale);
         }
 
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && !superSonic)
@@ -142,24 +80,9 @@ public class Player_Movement : MonoBehaviour {
 
         currentSpeed = dashRate.Evaluate(dashTime.Value / dashMaxTime) * maxDashSpeed;
 
-        if (superSonic)
+        if (superSonic && currentSpeed <= dashRate.keys[1].value)
         {
-
-            if (currentSpeed <= dashRate.keys[1].value) // dashRate.keys[1].value == supersonicThreshhold
-            {
-                //rotationDifficulty = 1.0f;
-
-                //mainRB.velocity = new Vector2(0,0) * TimeManager.TimeScale;
-                //currentSpeed = 1.0f;
-                stopSupersonic();
-            }
-            else
-            {
-                //rotationDifficulty = rotationDashDifficulty;
-                //mainRB.velocity = new Vector2(transform.up.x * currentSpeed, transform.up.y * currentSpeed) * TimeManager.TimeScale;
-                //currentSpeed *= dashSpeedEase;
-                //rotationDifficulty *= dashSpeedEase * 0.72f;
-            }
+            stopSupersonic();
         }
 
         if(dashTime.tick(Time.deltaTime))
@@ -168,19 +91,16 @@ public class Player_Movement : MonoBehaviour {
             dashTime.paused = true;
         }
 
-        transform.position += transform.up * currentSpeed * Time.deltaTime * TimeManager.TimeScale;
-        if (superSonic)
+        if (Input.GetKey(KeyCode.LeftShift))
         {
-            ParticleSystem.MinMaxCurve rateX = new ParticleSystem.MinMaxCurve();
-            rateX.constantMax = (float)(-1.9 * Mathf.Cos((90+angle) * (Mathf.PI/180)));
-            ParticleSystem.MinMaxCurve rateZ = new ParticleSystem.MinMaxCurve();
-            rateZ.constantMax = (float)(-1.9 * Mathf.Sin((90+angle)* (Mathf.PI / 180)));
-            ParticleSystem.VelocityOverLifetimeModule thrusterVelocity = trail.GetComponent<ParticleSystem>().velocityOverLifetime;
-            thrusterVelocity.x = rateX;
-            thrusterVelocity.z = rateZ;
-            trail.transform.position = transform.position;
-            trail.SetActive(true);
+            rotationSpeed = lowRotationSpeed;
         }
+        else
+        {
+            rotationSpeed = highRotationSpeed;
+        }
+
+        transform.position += transform.up * currentSpeed * Time.deltaTime * TimeManager.TimeScale;
         
     }
 
@@ -196,21 +116,18 @@ public class Player_Movement : MonoBehaviour {
 
     void stopSupersonic()
     {
-        trail.SetActive(false);
         superSonic = false;
-    }
-
-    void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.tag == "Bullet" && superSonic)
-        {
-            other.gameObject.SetActive(false);
-            HealthManager.increaseHealth(HealthManager.Instance.healthGainFromBullets);
-        }
     }
 
     private void Die()
     {
-        enabled = false;
+        for (int i = 0; i < 20; i++)
+        {
+            Bullet b = playerBulletPool.getInactivePooledObject().GetComponent<Bullet>();
+            b.init(transform.position, Random.Range(0, 360), Random.Range(4f, 6f));
+            b.gameObject.SetActive(true);
+        }
+        TimeManager.TimeScale = 0.1f;
+        Destroy(gameObject);
     }
 }
