@@ -11,6 +11,7 @@ public class HealthManager : MonoBehaviour {
     public float decayRate = 10;
     public float healthGainFromBullets = 10;
     public float healthLostFromBullets = 20;
+    public float healthLostFromEnemies = 40;
 
     private bool playerAlive = true;
 
@@ -51,6 +52,7 @@ public class HealthManager : MonoBehaviour {
     void PlayerDie()
     {
         print("Dead!!");
+        health = 0;
         TimeManager.TimeScale = 0.01f;
         GameObject.Find("Player").GetComponent<Player_Movement>().BroadcastMessage("Die");
         playerAlive = false;
@@ -76,10 +78,13 @@ public class HealthManager : MonoBehaviour {
 
     public static void increaseHealth(float health)
     {
-        instance.health += health;
-        if (Health > MaxHealth)
+        if (instance.playerAlive)
         {
-            Health = MaxHealth;
+            instance.health += health;
+            if (Health > MaxHealth)
+            {
+                Health = MaxHealth;
+            }
         }
     }
 

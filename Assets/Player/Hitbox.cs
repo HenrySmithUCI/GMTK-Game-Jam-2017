@@ -15,7 +15,8 @@ public class Hitbox : MonoBehaviour {
 
         if(other.tag == "Monster")
         {
-            HealthManager.Health = 0;
+            HealthManager.increaseHealth(-HealthManager.Instance.healthLostFromEnemies);
+            other.gameObject.GetComponent<Monster>().die();
         }
     }
 
