@@ -42,6 +42,8 @@ public class Player_Movement : MonoBehaviour {
     //float t = 0.5f;
     float currentSpeed = 0;
     //float rotationDifficulty = 1.0f;
+    GameObject trail = null;
+    float defaultThrusterEase = 0.3f;
 
     void Start () {
         dashTime = new Clock(dashMaxTime);
@@ -54,6 +56,8 @@ public class Player_Movement : MonoBehaviour {
         {
             playerBulletPool = GameObject.Find("PlayerBulletPool").GetComponent<GameObjectSpawnPool>();
         }
+        trail = GameObject.Find("Thruster");
+        trail.SetActive(false);
     }
 
     /*
@@ -98,6 +102,7 @@ public class Player_Movement : MonoBehaviour {
     private void Update()
     {
         //rotationInterpolation();
+        float thrusterAngleEase = 0;
         TimeManager.TimeScale = 0.1f + (currentSpeed / maxDashSpeed);
         sr.color = Color.Lerp(normalColor, superSonicColor, currentSpeed / maxDashSpeed);
 
@@ -117,10 +122,15 @@ public class Player_Movement : MonoBehaviour {
             bullet.SetActive(true);
         }
 
+
+        
+        
+
         if (keys['A'])
         {
             angle += (rotationSpeed / (currentSpeed + 0.2f/* rotationDifficulty*/)) * Time.deltaTime * TimeManager.TimeScale;
             transform.eulerAngles = new Vector3(0, 0, angle);
+            thrusterAngleEase = -defaultThrusterEase;
             //resetInterpolation();
         }
 
@@ -129,6 +139,7 @@ public class Player_Movement : MonoBehaviour {
             angle += (-rotationSpeed / (currentSpeed + 0.2f/* rotationDifficulty*/)) * Time.deltaTime * TimeManager.TimeScale;
             transform.eulerAngles = new Vector3(0, 0, angle);
             //resetInterpolation();
+            thrusterAngleEase = defaultThrusterEase;
         }
 
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && !superSonic)
@@ -140,7 +151,8 @@ public class Player_Movement : MonoBehaviour {
 
         if (superSonic)
         {
-            if(currentSpeed <= dashRate.keys[1].value) // dashRate.keys[1].value == supersonicThreshhold
+
+            if (currentSpeed <= dashRate.keys[1].value) // dashRate.keys[1].value == supersonicThreshhold
             {
                 //rotationDifficulty = 1.0f;
 
@@ -164,18 +176,33 @@ public class Player_Movement : MonoBehaviour {
         }
 
         transform.position += transform.up * currentSpeed * Time.deltaTime * TimeManager.TimeScale;
-
+        if (superSonic)
+        {
+            ParticleSystem.MinMaxCurve rateX = new ParticleSystem.MinMaxCurve();
+            rateX.constantMax = (float)(-1.9 * Mathf.Cos((90+angle) * (Mathf.PI/180))) - thrusterAngleEase;
+            ParticleSystem.MinMaxCurve rateZ = new ParticleSystem.MinMaxCurve();
+            rateZ.constantMax = (float)(-1.9 * Mathf.Sin((90+angle)* (Mathf.PI / 180))) + thrusterAngleEase;
+            ParticleSystem.VelocityOverLifetimeModule thrusterVelocity = trail.GetComponent<ParticleSystem>().velocityOverLifetime;
+            thrusterVelocity.x = rateX;
+            thrusterVelocity.z = rateZ;
+            trail.transform.position = transform.position;
+            trail.SetActive(true);
+        }
     }
+
 
     void goSupersonic()
     {
         superSonic = true;
+
+        
         dashTime.reset();
         dashTime.paused = false;
     }
 
     void stopSupersonic()
     {
+        trail.SetActive(false);
         superSonic = false;
     }
 
