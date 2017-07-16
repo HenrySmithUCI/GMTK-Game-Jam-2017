@@ -43,7 +43,6 @@ public class Player_Movement : MonoBehaviour {
     float currentSpeed = 0;
     //float rotationDifficulty = 1.0f;
     GameObject trail = null;
-    float defaultThrusterEase = 0.3f;
 
     void Start () {
         dashTime = new Clock(dashMaxTime);
@@ -102,7 +101,6 @@ public class Player_Movement : MonoBehaviour {
     private void Update()
     {
         //rotationInterpolation();
-        float thrusterAngleEase = 0;
         TimeManager.TimeScale = 0.1f + (currentSpeed / maxDashSpeed);
         sr.color = Color.Lerp(normalColor, superSonicColor, currentSpeed / maxDashSpeed);
 
@@ -110,9 +108,6 @@ public class Player_Movement : MonoBehaviour {
         keys[((int)'S')] = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
         keys[((int)'A')] = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
         keys[((int)'D')] = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
-
-
-        Debug.Log(keys['W']);
         if ((!superSonic) && keys['W'])
         {
 
@@ -130,7 +125,6 @@ public class Player_Movement : MonoBehaviour {
         {
             angle += (rotationSpeed / (currentSpeed + 0.2f/* rotationDifficulty*/)) * Time.deltaTime * TimeManager.TimeScale;
             transform.eulerAngles = new Vector3(0, 0, angle);
-            thrusterAngleEase = -defaultThrusterEase;
             //resetInterpolation();
         }
 
@@ -139,7 +133,6 @@ public class Player_Movement : MonoBehaviour {
             angle += (-rotationSpeed / (currentSpeed + 0.2f/* rotationDifficulty*/)) * Time.deltaTime * TimeManager.TimeScale;
             transform.eulerAngles = new Vector3(0, 0, angle);
             //resetInterpolation();
-            thrusterAngleEase = defaultThrusterEase;
         }
 
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.UpArrow)) && !superSonic)
@@ -179,15 +172,16 @@ public class Player_Movement : MonoBehaviour {
         if (superSonic)
         {
             ParticleSystem.MinMaxCurve rateX = new ParticleSystem.MinMaxCurve();
-            rateX.constantMax = (float)(-1.9 * Mathf.Cos((90+angle) * (Mathf.PI/180))) - thrusterAngleEase;
+            rateX.constantMax = (float)(-1.9 * Mathf.Cos((90+angle) * (Mathf.PI/180)));
             ParticleSystem.MinMaxCurve rateZ = new ParticleSystem.MinMaxCurve();
-            rateZ.constantMax = (float)(-1.9 * Mathf.Sin((90+angle)* (Mathf.PI / 180))) + thrusterAngleEase;
+            rateZ.constantMax = (float)(-1.9 * Mathf.Sin((90+angle)* (Mathf.PI / 180)));
             ParticleSystem.VelocityOverLifetimeModule thrusterVelocity = trail.GetComponent<ParticleSystem>().velocityOverLifetime;
             thrusterVelocity.x = rateX;
             thrusterVelocity.z = rateZ;
             trail.transform.position = transform.position;
             trail.SetActive(true);
         }
+        
     }
 
 
