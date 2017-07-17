@@ -211,8 +211,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   pool: {fileID: 0}
   parent: 0
-  rotationSpeed: 182.9
+  rotationSpeed: 180
   burstSpeed: 10
-  friction: 0.98
-  stopThreshhold: 1
+  friction: 0.985
+  stopThreshhold: 0.6
   chaseTag: Player

@@ -56,7 +56,8 @@ public class Player_Movement : MonoBehaviour {
         keys[((int)'D')] = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
         if ((!superSonic) && keys['W'])
         {
-
+            PlaySounds ps = GameObject.FindObjectOfType<PlaySounds>();
+            ps.ads.PlayOneShot(ps.sounds[1]);
             GameObject bullet = playerBulletPool.getInactivePooledObject();
             Bullet playerBullet = bullet.GetComponent<Bullet>();
             playerBullet.init(new Vector2(transform.position.x, transform.position.y), Mathf.Atan2(transform.up.y, transform.up.x) * (180 / Mathf.PI), 12.0f);
@@ -127,6 +128,8 @@ public class Player_Movement : MonoBehaviour {
             b.init(transform.position, Random.Range(0, 360), Random.Range(4f, 6f));
             b.gameObject.SetActive(true);
         }
+        PlaySounds ps = GameObject.FindObjectOfType<PlaySounds>();
+        ps.ads.PlayOneShot(ps.sounds[0]);
         TimeManager.TimeScale = 0.1f;
         Destroy(gameObject);
     }

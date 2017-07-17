@@ -40,8 +40,10 @@ GameObject:
   - component: {fileID: 23927797786584676}
   - component: {fileID: 50624124533643946}
   - component: {fileID: 61660121019275468}
+  - component: {fileID: 114260949840040940}
+  - component: {fileID: 114468544194920982}
   m_Layer: 0
-  m_Name: BaseMonster 1
+  m_Name: ChaserSpawner
   m_TagString: Monster
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -197,3 +199,42 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 0.7, y: 0.7}
   m_EdgeRadius: 0
+--- !u!114 &114260949840040940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1758690481333288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 26139b6812220ba4ba59c0c6bf48ccfd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  monster: {fileID: 114555955676936806, guid: 9019feabc12007445aa75e03f4e28b6f, type: 2}
+  interval: 2
+  maxMonsters: 5
+  spawnSpace:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 0
+    height: 0
+  useDefaults: 1
+  propARange: {x: 2, y: 6}
+  propBRange: {x: 2, y: 6}
+  tagForSpawned: Player
+--- !u!114 &114468544194920982
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1758690481333288}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ba58ec5e3a733af4c8e4fa43a16b80bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  pool: {fileID: 0}
+  parent: 0
+  rotationSpeed: 0
+  radius: 3

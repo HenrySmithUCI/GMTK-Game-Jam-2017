@@ -24,6 +24,8 @@ public abstract class Monster : MonoBehaviour {
                 b.init(transform.position, Random.Range(0, 360), Random.Range(4f, 6f));
                 b.gameObject.SetActive(true);
             }
+            PlaySounds ps = GameObject.FindObjectOfType<PlaySounds>();
+            ps.ads.PlayOneShot(ps.sounds[0]);
         }
         else
         {
